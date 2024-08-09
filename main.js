@@ -1,17 +1,23 @@
 
+const width = 125;
 const height = 125;
 const scale = 100;
 const x_limit = 200;
 const y_limit = 200;
-const diff_accuracy = 0.1;
-const tangents_diff = 0.1;
+const f_left = -125;
+const f_right = 125;
+const diff_accuracy = 0.02;
+const tangents_diff = 0.24;
+const left_tangent = -5;
+const right_tangent = 5;
 
 function f(x) {
-  return x*x
+  return x**3;
+  //return (1 / 10) * x * (x - 2) * (x - 5) + 3
 }
 
 function df(x) {
-  return 2 * x
+  return 3 * x * x;
 }
 
 function get_tangent_points(a) {
@@ -59,21 +65,24 @@ setDocDimensions(width, height);
 var function_points = []
 var tangent_line_pairs = []
 
-for (let i = -width; i <= width; i += diff_accuracy) {
+for (let i = f_left; i <= f_right; i += diff_accuracy) {
   function_points.push([i, f(i)]);
 }
 
-for (let i = -width; i <= width; i += tangents_diff) {
+for (let i = left_tangent; i <= right_tangent; i += tangents_diff) {
   console.log(get_tangent_points(i));
-  var l = [get_tangent_points(i)];
-  drawLines(l);
-  tangent_line_pairs.push(get_tangent_points(i));
+  var l = get_tangent_points(i);
+  //bt.scale(l, scale);
+  //drawLines(l);
+  tangent_line_pairs.push(l);
 }
 
 function_points = [function_points]
-//drawLines(tangent_line_pairs);
 
-//bt.scale(function_points, scale)
 
-// draw it
-drawLines(function_points);nes(function_points);
+bt.scale(function_points, scale);
+console.log(tangent_line_pairs);
+bt.scale(tangent_line_pairs, scale);
+
+drawLines(tangent_line_pairs);
+drawLines(function_points);
